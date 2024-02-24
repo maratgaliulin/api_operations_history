@@ -4,20 +4,22 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        String name = "Marat Galiulin";
-        System.out.println("Hello, " + name + "!!!!");
 
-        System.out.println("Введите строку: ");
-        String s = scan.nextLine();
+        fiveTransactionsInput fv = new fiveTransactionsInput();
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Введите целое число: ");
-        int i = scan.nextInt();
+        while (true){
+            System.out.println("Желаете продолжить? ");
+            String shallContinue = scanner.nextLine();
+            if(shallContinue.equals("no")){
+                break;
+            }
+            fv.setPassportCredentials();
+            fv.setAddressInfo();
+            fv.setfinancialInfo();
 
-        System.out.println("Введите десятичное дробное число: ");
-        float f = scan.nextFloat();
-
-        System.out.println("Вы ввели: " + i + ", " + f + ", " + s);
+            System.out.println(fv);
+        }
 
     }
 }
