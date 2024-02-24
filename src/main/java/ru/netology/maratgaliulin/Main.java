@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         String name = "Marat Galiulin";
-        System.out.println("Hello, " + name + "!");
+        System.out.println("Hello, " + name + "!!!!");
 
         System.out.println("Введите строку: ");
         String s = scan.nextLine();
