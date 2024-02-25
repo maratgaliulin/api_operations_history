@@ -9,16 +9,17 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         while (true){
-            String shallContinue = scanner.nextLine();
-            if(shallContinue.equals("no")){
-                break;
-            }
             fv.setPassportCredentials();
             fv.setAddressInfo();
             fv.setfinancialInfo();
 
             System.out.println(fv);
             System.out.println("Желаете продолжить? ");
+            String shallContinue = scanner.nextLine();
+
+            if(shallContinue.equals("no")){
+                break;
+            }
         }
 
     }
