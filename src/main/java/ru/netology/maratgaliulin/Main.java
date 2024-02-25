@@ -9,7 +9,6 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         while (true){
-            System.out.println("Желаете продолжить? ");
             String shallContinue = scanner.nextLine();
             if(shallContinue.equals("no")){
                 break;
@@ -19,6 +18,7 @@ public class Main {
             fv.setfinancialInfo();
 
             System.out.println(fv);
+            System.out.println("Желаете продолжить? ");
         }
 
     }
