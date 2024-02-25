@@ -1,6 +1,8 @@
 package ru.netology.maratgaliulin;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -74,12 +76,13 @@ public class fiveTransactionsInput {
         this.financialInfo = financialInfo;
     }
 
-
     @Override
     public String toString(){
+        var f = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        var out = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return String.format(
                 "ФИО: " + passportCredentials.get("LastName") + " " + passportCredentials.get("FirstName") + "\n"
-                + "Дата рождения: " + passportCredentials.get("DOB")  + "\n"
+                + "Дата рождения: " + LocalDate.parse(passportCredentials.get("DOB"), f).format(out) + "\n"
                 + "Адрес: " + addressInfo.get("Address")  + "\n"
                 + "email: " + addressInfo.get("email")  + "\n"
                 + "Телефон: " + addressInfo.get("phN")  + "\n"
