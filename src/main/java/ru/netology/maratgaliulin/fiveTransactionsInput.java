@@ -3,6 +3,7 @@ package ru.netology.maratgaliulin;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -11,6 +12,55 @@ public class fiveTransactionsInput {
     private Map<String, String> passportCredentials = new HashMap<>();
     private Map <String, String> addressInfo = new HashMap<>();
     private Map <String, BigDecimal> financialInfo = new HashMap<>();
+
+    private int numTransactions = 5;
+
+    private String[] transactionDate;
+
+    private String[] transactionType;
+
+    private BigDecimal[] transactionAmount;
+
+    public fiveTransactionsInput() {
+        this.transactionDate = new String[numTransactions];
+        this.transactionType = new String[numTransactions];
+        this.transactionAmount = new BigDecimal[numTransactions];
+    }
+
+    public fiveTransactionsInput(int numTransactions) {
+        this.numTransactions = numTransactions;
+        this.transactionDate = new String[numTransactions];
+        this.transactionType = new String[numTransactions];
+        this.transactionAmount = new BigDecimal[numTransactions];
+    }
+
+    public void setTransactions(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Введите следующую информацию:");
+
+        for (int i = 0; i < this.numTransactions; i++){
+
+            System.out.println("Введите дату транзакции: ");
+            String transactDt = scan.nextLine();
+//            scan.nextLine();
+
+            System.out.println("Введите тип транзакции (buy/sell): ");
+            String transactTp = scan.nextLine();
+            scan.nextLine();
+
+            System.out.println("Введите количество денег: ");
+            BigDecimal transactAmt = BigDecimal.valueOf(scan.nextFloat());
+
+            this.transactionDate[i] = transactDt;
+            this.transactionType[i] = transactTp;
+            this.transactionAmount[i] = transactAmt;
+
+        }
+
+        System.out.println(Arrays.toString(transactionDate));
+        System.out.println(Arrays.toString(transactionType));
+        System.out.println(Arrays.toString(transactionAmount));
+    }
 
     public void setPassportCredentials() {
         Map<String, String> passportCredentials = new HashMap<>();
@@ -75,6 +125,8 @@ public class fiveTransactionsInput {
 
         this.financialInfo = financialInfo;
     }
+
+
 
     @Override
     public String toString(){
