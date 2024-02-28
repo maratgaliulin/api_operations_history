@@ -41,12 +41,12 @@ public class fiveTransactionsInput {
         for (int i = 0; i < this.numTransactions; i++){
 
             System.out.println("Введите дату транзакции: ");
-            String transactDt = scan.nextLine();
+            String transactDt = scan.next();
 //            scan.nextLine();
 
             System.out.println("Введите тип транзакции (buy/sell): ");
-            String transactTp = scan.nextLine();
-            scan.nextLine();
+            String transactTp = scan.next();
+//            scan.nextLine();
 
             System.out.println("Введите количество денег: ");
             BigDecimal transactAmt = BigDecimal.valueOf(scan.nextFloat());
@@ -56,10 +56,17 @@ public class fiveTransactionsInput {
             this.transactionAmount[i] = transactAmt;
 
         }
+    }
 
-        System.out.println(Arrays.toString(transactionDate));
-        System.out.println(Arrays.toString(transactionType));
-        System.out.println(Arrays.toString(transactionAmount));
+    public void transactionsOutput(){
+        for (int i = 0; i < this.numTransactions; i++){
+            System.out.println((i + 1) + "-я транзакция:");
+            System.out.println("Дата транзакции: " + this.transactionDate[i]
+                    + "; Тип транзакции: "
+                    + this.transactionType[i]
+                    + "; Объем транзакции: "
+                    + this.transactionAmount[i] + "руб.");
+        }
     }
 
     public void setPassportCredentials() {

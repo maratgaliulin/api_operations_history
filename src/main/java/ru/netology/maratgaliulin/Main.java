@@ -23,6 +23,7 @@ public class Main {
 //        }
 
         fv.setTransactions();
+        fv.transactionsOutput();
 
     }
 }
