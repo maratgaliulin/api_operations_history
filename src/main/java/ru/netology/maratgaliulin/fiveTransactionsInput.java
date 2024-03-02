@@ -42,11 +42,9 @@ public class fiveTransactionsInput {
 
             System.out.println("Введите дату транзакции: ");
             String transactDt = scan.next();
-//            scan.nextLine();
 
             System.out.println("Введите тип транзакции (buy/sell): ");
             String transactTp = scan.next();
-//            scan.nextLine();
 
             System.out.println("Введите количество денег: ");
             BigDecimal transactAmt = BigDecimal.valueOf(scan.nextFloat());
