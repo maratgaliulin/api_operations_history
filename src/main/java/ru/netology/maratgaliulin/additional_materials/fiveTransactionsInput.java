@@ -1,4 +1,4 @@
-package ru.netology.maratgaliulin;
+package ru.netology.maratgaliulin.additional_materials;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

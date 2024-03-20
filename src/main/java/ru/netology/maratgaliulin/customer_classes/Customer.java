@@ -31,6 +31,9 @@ public class Customer {
         this.DOB = LocalDate.parse(DOB, f);
     }
 
+    public int getId(){
+        return clientID;
+    }
     public String getFirstName() {
         return firstName;
     }
