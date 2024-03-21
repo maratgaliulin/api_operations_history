@@ -3,24 +3,32 @@ package ru.netology.maratgaliulin.customer_classes;
 import ru.netology.maratgaliulin.exceptions.IntegerInputMismatchException;
 import ru.netology.maratgaliulin.exceptions.NameInputMismatchException;
 
-import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class StaticMethods {
 
-    public static Customer[] MakeClientList() throws IntegerInputMismatchException {
+    public static Customer[] MakeClientList() throws IntegerInputMismatchException, NameInputMismatchException {
         Scanner scan = new Scanner(System.in);
 
         System.out.print("Введите количество клиентов: ");
+
+        int customerArrLen = 1;
+
         if(scan.hasNextInt()){
-            int customerArrLen = scan.nextInt();
+            customerArrLen = scan.nextInt();
         }else {
             throw new IntegerInputMismatchException(scan.next());
         }
-        int customerArrLen = 1;
 
+        String namePattern = "(?<!\\S&&[^,])[a-zA-Z-а-яёА-ЯЁ]+(?!\\S&&[^,])";
+        String emailPattern = "^[a-zA-Z0-9_!#$%&'*+/=?``{|}~^.-]+@[a-zA-Z0-9.-]+$";
+        String phonePattern = "^(\\+\\d{1,3}( )?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$";
+        String datePattern = "\\d{2}-\\d{2}-\\d{4}";
 
         Customer[] customers = new Customer[customerArrLen];
         Integer[] IDArr = new Integer[customerArrLen];
@@ -31,46 +39,69 @@ public class StaticMethods {
         String[] DOBArr = new String[customerArrLen];
 
         for (int i = 0; i < customerArrLen; i++){
+
             System.out.println("Введите ID клиента: ");
-            IDArr[i] = scan.nextInt();
+            if(scan.hasNextInt()) {
+                IDArr[i] = scan.nextInt();
+            }else {
+                throw new IntegerInputMismatchException(scan.next());
+            }
 
             System.out.println("Введите фамилию клиента: ");
-            lastNameArr[i] = scan.next();
+            String lastName = scan.next();
+            lastNameArr[i] = CheckOutput(lastName, namePattern,
+                    "Фамилия не должна содержать цифры и специальные символы, но было указано: ");
 
             System.out.println("Введите имя клиента: ");
-            firstNameArr[i] = scan.next();
+            String firstName = scan.next();
+            firstNameArr[i] = CheckOutput(firstName, namePattern,
+                    "Имя не должно содержать цифры и специальные символы, но было указано: ");
 
             System.out.println("Введите email клиента: ");
-            emailArr[i] = scan.next();
+            String email = scan.next();
+            emailArr[i] = CheckOutput(email, emailPattern,
+                    "Указан неверный формат электронной почты - mail@yandex.ru, а было указано: ");
 
             System.out.println("Введите номер телефона клиента: ");
-            phoneArr[i] = scan.next();
+            String phoneNo = scan.next();
+            phoneArr[i] = CheckOutput(phoneNo, phonePattern,
+                    "Указан неверный формат номера телефона - +1(123)4567890 или +11234567890, а было указано: ");
 
             System.out.println("Введите дату рождения клиента (дд-мм-гггг): ");
-            DOBArr[i] = scan.next();
+            String DOB = scan.next();
+            DOBArr[i] = CheckOutput(DOB, datePattern,
+                    "Указан неверный формат даты рождения - дд-мм-гггг, а было указано: ");
 
             customers[i] = new Customer(IDArr[i], firstNameArr[i], lastNameArr[i], emailArr[i], phoneArr[i], DOBArr[i]);
         }
 
-
-
         return customers;
 
     }
+
     public static Operation[] MakeOperationList(Integer[] IDArr) {
 
         Scanner scan = new Scanner(System.in);
 
         System.out.print("Введите количество транзакций: ");
-        int operationArrLen = scan.nextInt();
+
+        int operationArrLen = 1;
+
+        if(scan.hasNextInt()) {
+            operationArrLen = scan.nextInt();
+        }else {
+            throw new IntegerInputMismatchException(scan.next());
+        }
+
 
         Operation[] operations = new Operation[operationArrLen];
-
         int[] opClientIDArr = new int[operationArrLen];
         int[] operationIDArr = new int[operationArrLen];
         double[] amountArr = new double[operationArrLen];
 
+
         for (int i = 0; i < operationArrLen; i++){
+
             System.out.println("Введите тип операции (1 - кэшбэк, 2 - займ): ");
             int opType = scan.nextInt();
             if(opType != 1 && opType != 2){
@@ -88,6 +119,7 @@ public class StaticMethods {
                 System.out.println("Клиента с таким ID не существует.");
                 break;
             }
+
             System.out.println("Введите ID операции: ");
             operationIDArr[i] = scan.nextInt();
 
@@ -132,6 +164,21 @@ public class StaticMethods {
     public static Integer[][] saveClientsAndOperationsIDs(Integer[] clientIDArr, Integer[] operationIDArr){
         return new Integer[][]{clientIDArr, operationIDArr};
     }
+
+    public static boolean MatchPattern(String str, String RegExPattern){
+        Pattern pattern = Pattern.compile(RegExPattern);
+        Matcher matcher = pattern.matcher(str);
+        return matcher.matches();
+    }
+
+    public static String CheckOutput(String input, String RegExPattern, String ErrorMsg){
+        if(MatchPattern(input, RegExPattern)){
+            return input;
+        }else {
+            throw new NameInputMismatchException(ErrorMsg, input);
+        }
+    }
+
 
     public static void printOperations(Operation[] operations) {
         for (Operation op : operations){
