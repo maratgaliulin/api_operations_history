@@ -3,14 +3,14 @@ package ru.netology.maratgaliulin.customer_classes;
 import ru.netology.maratgaliulin.exceptions.IntegerInputMismatchException;
 import ru.netology.maratgaliulin.exceptions.NameInputMismatchException;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class StaticMethods {
+
+//    МЕТОДЫ ДЛЯ СОЗДАНИЯ КЛИЕНТОВ И ОПЕРАЦИЙ:
 
     public static Customer[] MakeClientList() throws IntegerInputMismatchException, NameInputMismatchException {
         Scanner scan = new Scanner(System.in);
@@ -138,6 +138,12 @@ public class StaticMethods {
         return operations;
     }
 
+
+
+
+
+//    МЕТОДЫ ДЛЯ ПОЛУЧЕНИЯ ID КЛИЕНТОВ И ОПЕРАЦИЙ:
+
     public static Integer[] getCustomerIds(Customer[] customers){
         int len = customers.length;
 
@@ -161,9 +167,17 @@ public class StaticMethods {
         return OperationIds;
     }
 
+
+
+
+
+//    МЕТОДЫ ДЛЯ СОХРАНЕНИЯ ИНФОРМАЦИИ О КЛИЕНТАХ И ОПЕРАЦИЯХ:
+
     public static Integer[][] saveClientsAndOperationsIDs(Integer[] clientIDArr, Integer[] operationIDArr){
         return new Integer[][]{clientIDArr, operationIDArr};
     }
+
+//    МЕТОДЫ ДЛЯ ПРОВЕРКИ ПРАВИЛЬНОСТИ ВВОДА:
 
     public static boolean MatchPattern(String str, String RegExPattern){
         Pattern pattern = Pattern.compile(RegExPattern);
@@ -178,6 +192,12 @@ public class StaticMethods {
             throw new NameInputMismatchException(ErrorMsg, input);
         }
     }
+
+
+
+
+
+//    МЕТОДЫ ДЛЯ ВЫВОДА В КОНСОЛЬ ИНФОРМАЦИИ О КЛИЕНТАХ И ОПЕРАЦИЯХ:
 
 
     public static void printOperations(Operation[] operations) {
