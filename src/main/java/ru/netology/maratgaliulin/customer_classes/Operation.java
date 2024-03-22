@@ -1,9 +1,10 @@
 package ru.netology.maratgaliulin.customer_classes;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 
-public class Operation {
+public class Operation implements Serializable {
     private int clientID;
 
     private int operationID;

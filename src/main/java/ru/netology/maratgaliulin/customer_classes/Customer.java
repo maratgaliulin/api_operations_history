@@ -1,9 +1,10 @@
 package ru.netology.maratgaliulin.customer_classes;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Customer {
+public class Customer implements Serializable {
     private String firstName;
     private String lastName;
     private String email;

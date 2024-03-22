@@ -1,18 +1,72 @@
 package ru.netology.maratgaliulin.customer_classes;
 
+
 import ru.netology.maratgaliulin.exceptions.IntegerInputMismatchException;
 import ru.netology.maratgaliulin.exceptions.NameInputMismatchException;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class StaticMethods {
+public class OperationData implements Serializable {
+    private Customer[] customers;
+    private Operation[] operations;
 
-//    МЕТОДЫ ДЛЯ СОЗДАНИЯ КЛИЕНТОВ И ОПЕРАЦИЙ:
+    public OperationData() {}
 
-    public static Customer[] MakeClientList() throws IntegerInputMismatchException, NameInputMismatchException {
+    public Customer[] getCustomers() {
+        return customers;
+    }
+    public Operation[] getOperations() {
+        return operations;
+    }
+
+    private void setCustomers(Customer[] customers) {
+        this.customers = customers;
+    }
+    private void setOperations(Operation[] operations) {
+        this.operations = operations;
+    }
+
+    private Integer[] getCustomerIds(Customer[] customers){
+        int len = customers.length;
+
+        Integer[] CustomerIds = new Integer[len];
+
+        for (int i = 0; i < len; i++) {
+            CustomerIds[i] = customers[i].getId();
+        }
+
+        return CustomerIds;
+    }
+    private Integer[] getTransactionIds(Operation[] ops){
+        int len = ops.length;
+
+        Integer[] OperationIds = new Integer[len];
+
+        for (int i = 0; i < len; i++) {
+            OperationIds[i] = ops[i].getOperationID();
+        }
+        return OperationIds;
+    }
+
+    private boolean MatchPattern(String str, String RegExPattern){
+        Pattern pattern = Pattern.compile(RegExPattern);
+        Matcher matcher = pattern.matcher(str);
+        return matcher.matches();
+    }
+    private String CheckOutput(String input, String RegExPattern, String ErrorMsg){
+        if(MatchPattern(input, RegExPattern)){
+            return input;
+        }else {
+            throw new NameInputMismatchException(ErrorMsg, input);
+        }
+    }
+
+
+    public void MakeClientList() throws IntegerInputMismatchException, NameInputMismatchException {
         Scanner scan = new Scanner(System.in);
 
         System.out.print("Введите количество клиентов: ");
@@ -75,11 +129,10 @@ public class StaticMethods {
             customers[i] = new Customer(IDArr[i], firstNameArr[i], lastNameArr[i], emailArr[i], phoneArr[i], DOBArr[i]);
         }
 
-        return customers;
+        setCustomers(customers);
 
     }
-
-    public static Operation[] MakeOperationList(Integer[] IDArr) {
+    public void MakeOperationList(Integer[] IDArr) {
 
         Scanner scan = new Scanner(System.in);
 
@@ -135,94 +188,11 @@ public class StaticMethods {
 
         }
 
-        return operations;
+        setOperations(operations);
     }
-
-
-
-
-
-//    МЕТОДЫ ДЛЯ ПОЛУЧЕНИЯ ID КЛИЕНТОВ И ОПЕРАЦИЙ:
-
-    public static Integer[] getCustomerIds(Customer[] customers){
-        int len = customers.length;
-
-        Integer[] CustomerIds = new Integer[len];
-
-        for (int i = 0; i < len; i++) {
-            CustomerIds[i] = customers[i].getId();
-        }
-
-        return CustomerIds;
+    public Integer[][] saveClientsAndOperationsIDs(){
+        return new Integer[][]{getCustomerIds(customers), getTransactionIds(operations)};
     }
-
-    public static Integer[] getTransactionIds(Operation[] ops){
-        int len = ops.length;
-
-        Integer[] OperationIds = new Integer[len];
-
-        for (int i = 0; i < len; i++) {
-            OperationIds[i] = ops[i].getOperationID();
-        }
-        return OperationIds;
-    }
-
-
-
-
-
-//    МЕТОДЫ ДЛЯ СОХРАНЕНИЯ ИНФОРМАЦИИ О КЛИЕНТАХ И ОПЕРАЦИЯХ:
-
-    public static Integer[][] saveClientsAndOperationsIDs(Integer[] clientIDArr, Integer[] operationIDArr){
-        return new Integer[][]{clientIDArr, operationIDArr};
-    }
-
-//    МЕТОДЫ ДЛЯ ПРОВЕРКИ ПРАВИЛЬНОСТИ ВВОДА:
-
-    public static boolean MatchPattern(String str, String RegExPattern){
-        Pattern pattern = Pattern.compile(RegExPattern);
-        Matcher matcher = pattern.matcher(str);
-        return matcher.matches();
-    }
-
-    public static String CheckOutput(String input, String RegExPattern, String ErrorMsg){
-        if(MatchPattern(input, RegExPattern)){
-            return input;
-        }else {
-            throw new NameInputMismatchException(ErrorMsg, input);
-        }
-    }
-
-
-
-
-
-//    МЕТОДЫ ДЛЯ ВЫВОДА В КОНСОЛЬ ИНФОРМАЦИИ О КЛИЕНТАХ И ОПЕРАЦИЯХ:
-
-
-    public static void printOperations(Operation[] operations) {
-        for (Operation op : operations){
-            op.print();
-        }
-    }
-
-    public static void printCustomers(Customer[] customers) {
-        for (Customer cus : customers){
-            cus.print();
-        }
-    }
-
-    public static void printCustomerAndOperationIds(Integer[][] arr) {
-        System.out.println(Arrays.deepToString(arr));
-    }
-
-
-
-
-//    МЕТОДЫ ДЛЯ СЕРИАЛИЗАЦИИ И ДЕСЕРИАЛИЗАЦИИ
-
 
 
 }
-
-
