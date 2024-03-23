@@ -9,6 +9,7 @@ public class Operation implements Serializable {
 
     private int operationID;
     private BigDecimal amount;
+    private String operationType;
 
 
     public Operation() {}
@@ -21,6 +22,10 @@ public class Operation implements Serializable {
 
     public int getClientID() {
         return clientID;
+    }
+
+    public String getOperationType() {
+        return operationType;
     }
 
     public void setClientID(int clientID) {

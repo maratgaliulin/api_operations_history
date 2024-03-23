@@ -1,10 +1,10 @@
 package ru.netology.maratgaliulin.customer_classes;
 
-
 import ru.netology.maratgaliulin.exceptions.IntegerInputMismatchException;
 import ru.netology.maratgaliulin.exceptions.NameInputMismatchException;
 
-import java.io.Serializable;
+import java.io.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -23,12 +23,16 @@ public class OperationData implements Serializable {
         return operations;
     }
 
-    private void setCustomers(Customer[] customers) {
+//    СЕТТЕРЫ
+
+    public void setCustomers(Customer[] customers) {
         this.customers = customers;
     }
-    private void setOperations(Operation[] operations) {
+    public void setOperations(Operation[] operations) {
         this.operations = operations;
     }
+
+//    ГЕТТЕРЫ (
 
     private Integer[] getCustomerIds(Customer[] customers){
         int len = customers.length;
@@ -52,6 +56,8 @@ public class OperationData implements Serializable {
         return OperationIds;
     }
 
+//    МЕТОДЫ ПРОВЕРКИ
+
     private boolean MatchPattern(String str, String RegExPattern){
         Pattern pattern = Pattern.compile(RegExPattern);
         Matcher matcher = pattern.matcher(str);
@@ -65,6 +71,8 @@ public class OperationData implements Serializable {
         }
     }
 
+
+//    МЕТОДЫ ЗАПОЛНЕНИЯ КЛАССА OPERATIONDATA ПРИ ПОМОЩИ ПОЛЬЗОВАТЕЛЬСКОГО ВВОДА
 
     public void MakeClientList() throws IntegerInputMismatchException, NameInputMismatchException {
         Scanner scan = new Scanner(System.in);
@@ -132,7 +140,7 @@ public class OperationData implements Serializable {
         setCustomers(customers);
 
     }
-    public void MakeOperationList(Integer[] IDArr) {
+    public void MakeOperationList() {
 
         Scanner scan = new Scanner(System.in);
 
@@ -146,6 +154,7 @@ public class OperationData implements Serializable {
             throw new IntegerInputMismatchException(scan.next());
         }
 
+        Integer[] IDArr = getCustomerIds(customers);
 
         Operation[] operations = new Operation[operationArrLen];
         int[] opClientIDArr = new int[operationArrLen];
@@ -190,8 +199,65 @@ public class OperationData implements Serializable {
 
         setOperations(operations);
     }
+
+
+//    МЕТОДЫ СОХРАНЕНИЯ, СЕРИАЛИЗАЦИИ, ДЕСЕРИАЛИЗАЦИИ
+
     public Integer[][] saveClientsAndOperationsIDs(){
         return new Integer[][]{getCustomerIds(customers), getTransactionIds(operations)};
+    }
+
+    public void SerializeOpData() throws IOException {
+        FileOutputStream outputStream = new FileOutputStream("C:\\Users\\egoma\\Desktop\\save.ser");
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+        objectOutputStream.writeObject(OperationData.this);
+    }
+
+    public void DeserializeOpData() throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream = new FileInputStream("C:\\Users\\egoma\\Desktop\\save.ser");
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+        OperationData operationData = (OperationData) objectInputStream.readObject();
+
+        System.out.println("Десериализованный объект:");
+        System.out.println(operationData);
+    }
+
+
+
+
+//    OVERRIDE METHODS
+
+    @Override
+    public String toString(){
+        var f = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        StringBuilder str = new StringBuilder();
+        if(customers != null){
+            for (Customer cus : customers){
+                str.append("Информация о клиенте:\n" + "ID клиента: ")
+                        .append(cus.getClientID()).append(".\n")
+                        .append("ФИО клиента: ").append(cus.getFirstName())
+                        .append(" ").append(cus.getLastName())
+                        .append(".\n").append("Дата рождения: ")
+                        .append(cus.getDOB().format(f)).append(".\n")
+                        .append("Email: ").append(cus.getEmail())
+                        .append(".\n").append("Номер телефона: ")
+                        .append(cus.getPhoneNo()).append(".\n").append(".\n");
+            }
+        }
+
+        if(operations != null){
+            for (Operation op: operations){
+                str.append("Детали операции: \n").append("Тип операции: ")
+                        .append(op.getOperationType()).append(".")
+                        .append("ID клиента: ").append(op.getClientID())
+                        .append(". \n").append("ID операции: ")
+                        .append(op.getOperationID()).append(".\n")
+                        .append("Сумма операции: ").append(op.getAmount())
+                        .append(". \n");
+            }
+        }
+        return str.toString();
     }
 
 

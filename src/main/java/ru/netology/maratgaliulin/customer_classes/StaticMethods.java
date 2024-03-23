@@ -17,7 +17,7 @@ public class StaticMethods {
 
         System.out.print("Введите количество клиентов: ");
 
-        int customerArrLen = 1;
+        int customerArrLen;
 
         if(scan.hasNextInt()){
             customerArrLen = scan.nextInt();
@@ -78,14 +78,13 @@ public class StaticMethods {
         return customers;
 
     }
-
     public static Operation[] MakeOperationList(Integer[] IDArr) {
 
         Scanner scan = new Scanner(System.in);
 
         System.out.print("Введите количество транзакций: ");
 
-        int operationArrLen = 1;
+        int operationArrLen;
 
         if(scan.hasNextInt()) {
             operationArrLen = scan.nextInt();
@@ -139,9 +138,6 @@ public class StaticMethods {
     }
 
 
-
-
-
 //    МЕТОДЫ ДЛЯ ПОЛУЧЕНИЯ ID КЛИЕНТОВ И ОПЕРАЦИЙ:
 
     public static Integer[] getCustomerIds(Customer[] customers){
@@ -169,8 +165,6 @@ public class StaticMethods {
 
 
 
-
-
 //    МЕТОДЫ ДЛЯ СОХРАНЕНИЯ ИНФОРМАЦИИ О КЛИЕНТАХ И ОПЕРАЦИЯХ:
 
     public static Integer[][] saveClientsAndOperationsIDs(Integer[] clientIDArr, Integer[] operationIDArr){
@@ -195,8 +189,6 @@ public class StaticMethods {
 
 
 
-
-
 //    МЕТОДЫ ДЛЯ ВЫВОДА В КОНСОЛЬ ИНФОРМАЦИИ О КЛИЕНТАХ И ОПЕРАЦИЯХ:
 
 
@@ -215,11 +207,6 @@ public class StaticMethods {
     public static void printCustomerAndOperationIds(Integer[][] arr) {
         System.out.println(Arrays.deepToString(arr));
     }
-
-
-
-
-//    МЕТОДЫ ДЛЯ СЕРИАЛИЗАЦИИ И ДЕСЕРИАЛИЗАЦИИ
 
 
 
