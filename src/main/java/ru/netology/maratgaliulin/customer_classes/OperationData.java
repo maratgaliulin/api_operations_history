@@ -208,13 +208,15 @@ public class OperationData implements Serializable {
     }
 
     public void SerializeOpData() throws IOException {
-        FileOutputStream outputStream = new FileOutputStream("C:\\Users\\egoma\\Desktop\\save.ser");
+        String filePath = "E:\\1.WORKING-FOLDER\\3.Study\\4.Финтех_бакалавриат\\011.Программирование_на_Java\\api_operations_history\\Files\\save.ser";
+        FileOutputStream outputStream = new FileOutputStream(filePath);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
         objectOutputStream.writeObject(OperationData.this);
     }
 
     public void DeserializeOpData() throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream = new FileInputStream("C:\\Users\\egoma\\Desktop\\save.ser");
+        String filePath = "E:\\1.WORKING-FOLDER\\3.Study\\4.Финтех_бакалавриат\\011.Программирование_на_Java\\api_operations_history\\Files\\save.ser";
+        FileInputStream fileInputStream = new FileInputStream(filePath);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
         OperationData operationData = (OperationData) objectInputStream.readObject();
@@ -222,8 +224,6 @@ public class OperationData implements Serializable {
         System.out.println("Десериализованный объект:");
         System.out.println(operationData);
     }
-
-
 
 
 //    OVERRIDE METHODS
@@ -242,7 +242,7 @@ public class OperationData implements Serializable {
                         .append(cus.getDOB().format(f)).append(".\n")
                         .append("Email: ").append(cus.getEmail())
                         .append(".\n").append("Номер телефона: ")
-                        .append(cus.getPhoneNo()).append(".\n").append(".\n");
+                        .append(cus.getPhoneNo()).append(".\n").append("\n");
             }
         }
 
