@@ -5,8 +5,8 @@ public class LoanOperation extends Operation{
     public LoanOperation() {
     }
 
-    public LoanOperation(int clientID, int operationID, double amount) {
-        super(clientID, operationID, amount);
+    public LoanOperation(String clientID, double amount) {
+        super(clientID, amount);
     }
 
     public String getOperationType() {

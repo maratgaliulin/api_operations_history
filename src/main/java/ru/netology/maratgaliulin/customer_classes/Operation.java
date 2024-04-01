@@ -3,24 +3,24 @@ package ru.netology.maratgaliulin.customer_classes;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 public class Operation implements Serializable {
-    private int clientID;
+    private String clientID;
 
-    private int operationID;
+    private final String operationID = UUID.randomUUID().toString();;
     private BigDecimal amount;
     private String operationType;
 
 
     public Operation() {}
 
-    public Operation(int clientID, int operationID, double amount) {
+    public Operation(String clientID, double amount) {
         this.clientID = clientID;
-        this.operationID = operationID;
         this.amount = BigDecimal.valueOf(amount);
     }
 
-    public int getClientID() {
+    public String getClientID() {
         return clientID;
     }
 
@@ -28,17 +28,14 @@ public class Operation implements Serializable {
         return operationType;
     }
 
-    public void setClientID(int clientID) {
+    public void setClientID(String clientID) {
         this.clientID = clientID;
     }
 
-    public int getOperationID() {
+    public String getOperationID() {
         return operationID;
     }
 
-    public void setOperationID(int operationID) {
-        this.operationID = operationID;
-    }
 
     public BigDecimal getAmount() {
         return amount;
