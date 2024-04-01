@@ -8,7 +8,7 @@ public class CashbackOperation extends Operation{
     public CashbackOperation() {
     }
 
-    public CashbackOperation(String clientID, double amount) {
+    public CashbackOperation(String clientID, String amount) {
         super(clientID, amount);
     }
 

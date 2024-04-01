@@ -15,9 +15,9 @@ public class Operation implements Serializable {
 
     public Operation() {}
 
-    public Operation(String clientID, double amount) {
+    public Operation(String clientID, String amount) {
         this.clientID = clientID;
-        this.amount = BigDecimal.valueOf(amount);
+        this.amount = BigDecimal.valueOf(Double.parseDouble(amount));
     }
 
     public String getClientID() {

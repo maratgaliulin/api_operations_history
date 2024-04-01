@@ -1,7 +1,5 @@
 package ru.netology.maratgaliulin.service_classes;
 
-import ru.netology.maratgaliulin.customer_classes.OperationData;
-
 import java.io.*;
 
 public class StorageService {
